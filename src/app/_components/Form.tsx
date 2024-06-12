@@ -11,6 +11,10 @@ export const Form = () => {
 
   const [form, fields] = useForm({
     lastResult,
+    defaultValue: {
+      userName: 'aa',
+      email: 'aa',
+    },
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: schema })
     },
@@ -20,7 +24,7 @@ export const Form = () => {
     shouldRevalidate: 'onInput',
   })
 
-  console.log('field',fields.userName)
+  console.log(form.errors)
 
   return (
     <form {...getFormProps(form)} action={action} onSubmit={form.onSubmit}  className="m-4">
@@ -29,7 +33,6 @@ export const Form = () => {
         <input
           {...getInputProps(fields.userName, { type: 'text'})}
           className="border-2 border-gray-300 rounded-md p-2 w-full"
-          defaultValue={'aaa'}
         />
         <div id={fields.userName.errorId} className="text-red-500">{fields.userName.errors}</div>
       </div>
@@ -41,6 +44,15 @@ export const Form = () => {
 				/>
 				<div id={fields.email.errorId} className="text-red-500">{fields.email.errors}</div>
 			</div>
+      {form.errors && (
+        <div>
+      <ul>
+            {form.errors.map((error) => (
+              <li className="text-red-500" key={error}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <button className="px-2.5 py-2 bg-blue-500 rounded-md text-white">送信</button>
     </form>

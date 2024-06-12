@@ -14,9 +14,8 @@ export const userRegister = async (prevState: any, formData: FormData) => {
   console.log(submission.value.userName)
   console.log(submission.value.email)
 
-  // return redirect('/home')
   return submission.reply({
-    formErrors: ['ユーザー名が重複しています']
+    formErrors: ['ユーザー名が重複しています', 'メールアドレスが重複しています']
   })
 
   // return redirect('/home')
